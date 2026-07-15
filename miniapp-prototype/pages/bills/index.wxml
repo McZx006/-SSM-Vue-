@@ -1,0 +1,39 @@
+<view class="page">
+  <view class="filter-row">
+    <view class="filter {{activeFilter === 'month' ? 'active' : ''}}" data-filter="month" bindtap="changeFilter">本月</view>
+    <view class="filter {{activeFilter === 'expense' ? 'active' : ''}}" data-filter="expense" bindtap="changeFilter">支出</view>
+    <view class="filter {{activeFilter === 'income' ? 'active' : ''}}" data-filter="income" bindtap="changeFilter">收入</view>
+    <view class="filter {{activeFilter === 'all' ? 'active' : ''}}" data-filter="all" bindtap="changeFilter">全部</view>
+  </view>
+
+  <view class="summary-card">
+    <view>
+      <view class="muted">当前筛选</view>
+      <view class="summary-text">{{bills.length}} 条账单</view>
+    </view>
+    <view class="summary-columns">
+      <view>
+        <view class="muted">收入</view>
+        <view class="income-text">¥{{summary.income}}</view>
+      </view>
+      <view>
+        <view class="muted">支出</view>
+        <view class="expense-text">¥{{summary.expense}}</view>
+      </view>
+    </view>
+    <view class="summary-action" bindtap="loadBills">刷新</view>
+  </view>
+
+  <view wx:if="{{loading}}" class="empty-card">正在加载账单...</view>
+  <view wx:elif="{{!bills.length}}" class="empty-card">暂无账单，先去首页点模板记一笔吧。</view>
+
+  <view wx:else class="bill-card" wx:for="{{bills}}" wx:key="id">
+    <view>
+      <view class="bill-title">{{item.categoryName}}</view>
+      <view class="muted">{{item.date}} · {{item.remark}}</view>
+    </view>
+    <view class="{{item.type === 'income' ? 'income-text' : 'expense-text'}}">
+      {{item.type === 'income' ? '+' : '-'}}¥{{item.amount}}
+    </view>
+  </view>
+</view>

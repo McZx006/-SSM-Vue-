@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhangxin.mapper.BillMapper">
+
+    <resultMap id="BillResultMap" type="Bill">
+        <id property="id" column="id"/>
+        <result property="amount" column="amount"/>
+        <result property="type" column="type"/>
+        <result property="categoryId" column="category_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="date" column="date"/>
+        <result property="remark" column="remark"/>
+        <result property="images" column="images"/>
+        <result property="location" column="location"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <!-- 关联对象 -->
+        <association property="category" javaType="Category">
+            <id property="id" column="category_id"/>
+            <result property="name" column="category_name"/>
+            <result property="type" column="category_type"/>
+            <result property="icon" column="category_icon"/>
+            <result property="color" column="category_color"/>
+        </association>
+    </resultMap>
+
+    <select id="findById" resultMap="BillResultMap">
+        SELECT b.*,
+               c.name as category_name,
+               c.type as category_type,
+               c.icon as category_icon,
+               c.color as category_color
+        FROM bill b
+        LEFT JOIN category c ON b.category_id = c.id
+        WHERE b.id = #{id}
+    </select>
+
+    <select id="findByQuery" resultMap="BillResultMap">
+        SELECT b.*,
+               c.name as category_name,
+               c.type as category_type,
+               c.icon as category_icon,
+               c.color as category_color
+        FROM bill b
+        LEFT JOIN category c ON b.category_id = c.id
+        <where>
+            <if test="userId != null">b.user_id = #{userId}</if>
+            <if test="type != null and type != ''">AND b.type = #{type}</if>
+            <if test="categoryId != null">AND b.category_id = #{categoryId}</if>
+            <if test="startDate != null and startDate != ''">AND b.date >= #{startDate}</if>
+            <if test="endDate != null and endDate != ''">AND b.date &lt;= #{endDate}</if>
+            <if test="keyword != null and keyword != ''">
+                AND (b.remark LIKE CONCAT('%', #{keyword}, '%')
+                     OR c.name LIKE CONCAT('%', #{keyword}, '%'))
+            </if>
+        </where>
+        ORDER BY b.date DESC, b.create_time DESC
+        <if test="pageSize != null and pageSize > 0">
+            LIMIT #{pageSize} OFFSET #{offset}
+        </if>
+    </select>
+
+    <select id="countByQuery" resultType="int">
+        SELECT COUNT(*)
+        FROM bill b
+        LEFT JOIN category c ON b.category_id = c.id
+        <where>
+            <if test="userId != null">b.user_id = #{userId}</if>
+            <if test="type != null and type != ''">AND b.type = #{type}</if>
+            <if test="categoryId != null">AND b.category_id = #{categoryId}</if>
+            <if test="startDate != null and startDate != ''">AND b.date >= #{startDate}</if>
+            <if test="endDate != null and endDate != ''">AND b.date &lt;= #{endDate}</if>
+            <if test="keyword != null and keyword != ''">
+                AND (b.remark LIKE CONCAT('%', #{keyword}, '%')
+                     OR c.name LIKE CONCAT('%', #{keyword}, '%'))
+            </if>
+        </where>
+    </select>
+
+    <insert id="insert" parameterType="Bill" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO bill (amount, type, category_id, user_id, date, remark, images, location)
+        VALUES (#{amount}, #{type}, #{categoryId}, #{userId}, #{date}, #{remark}, #{images}, #{location})
+    </insert>
+
+    <update id="update" parameterType="Bill">
+        UPDATE bill
+        <set>
+            <if test="amount != null">amount = #{amount},</if>
+            <if test="type != null and type != ''">type = #{type},</if>
+            <if test="categoryId != null">category_id = #{categoryId},</if>
+            <if test="date != null">date = #{date},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="images != null">images = #{images},</if>
+            <if test="location != null">location = #{location},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM bill WHERE id = #{id}
+    </delete>
+
+    <select id="getTotalByMonth" resultType="java.math.BigDecimal">
+        SELECT COALESCE(SUM(amount), 0)
+        FROM bill
+        WHERE user_id = #{userId}
+        AND DATE_FORMAT(date, '%Y-%m') = #{month}
+        <if test="type != null and type != ''">
+            AND type = #{type}
+        </if>
+    </select>
+
+    <select id="getCategoryStatistics" resultType="com.zhangxin.dto.CategoryStatistics">
+        SELECT
+            c.id as categoryId,
+            c.name as categoryName,
+            c.icon as categoryIcon,
+            c.color as categoryColor,
+            COALESCE(SUM(b.amount), 0) as amount,
+            0 as percentage
+        FROM category c
+        LEFT JOIN bill b ON c.id = b.category_id
+            AND b.user_id = #{userId}
+            AND DATE_FORMAT(b.date, '%Y-%m') = #{month}
+            <if test="type != null and type != ''">
+                AND b.type = #{type}
+            </if>
+        WHERE c.type = #{type}
+        GROUP BY c.id, c.name, c.icon, c.color
+        HAVING amount > 0
+        ORDER BY amount DESC
+    </select>
+
+    <select id="getMonthlyStatistics" resultType="com.zhangxin.dto.MonthlyStatistics">
+        SELECT
+            DATE_FORMAT(date, '%Y-%m') as month,
+            COALESCE(SUM(CASE WHEN type = 'income' THEN amount ELSE 0 END), 0) as income,
+            COALESCE(SUM(CASE WHEN type = 'expense' THEN amount ELSE 0 END), 0) as expense,
+            COALESCE(SUM(CASE WHEN type = 'income' THEN amount ELSE 0 END), 0) -
+            COALESCE(SUM(CASE WHEN type = 'expense' THEN amount ELSE 0 END), 0) as balance
+        FROM bill
+        WHERE user_id = #{userId}
+        AND DATE_FORMAT(date, '%Y') = #{year}
+        GROUP BY DATE_FORMAT(date, '%Y-%m')
+        ORDER BY month ASC
+    </select>
+
+    <select id="findRecentBills" resultMap="BillResultMap">
+        SELECT b.*,
+               c.name as category_name,
+               c.type as category_type,
+               c.icon as category_icon,
+               c.color as category_color
+        FROM bill b
+        LEFT JOIN category c ON b.category_id = c.id
+        WHERE b.user_id = #{userId}
+        ORDER BY b.date DESC, b.create_time DESC
+        LIMIT #{limit}
+    </select>
+
+    <select id="getMonthlyExpense" resultType="java.math.BigDecimal">
+        SELECT COALESCE(SUM(amount), 0)
+        FROM bill
+        WHERE user_id = #{userId}
+        AND type = 'expense'
+        AND DATE_FORMAT(date, '%Y-%m') = #{month}
+    </select>
+
+</mapper>

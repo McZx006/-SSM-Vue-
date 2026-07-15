@@ -1,0 +1,37 @@
+USE account_dashboard;
+
+UPDATE `category` SET `name` = '餐饮' WHERE `name` = 'Food';
+UPDATE `category` SET `name` = '购物' WHERE `name` = 'Shopping';
+UPDATE `category` SET `name` = '交通' WHERE `name` = 'Transport';
+UPDATE `category` SET `name` = '娱乐' WHERE `name` = 'Entertainment';
+UPDATE `category` SET `name` = '医疗' WHERE `name` = 'Medical';
+UPDATE `category` SET `name` = '学习' WHERE `name` = 'Education';
+UPDATE `category` SET `name` = '住房' WHERE `name` = 'Housing';
+UPDATE `category` SET `name` = '其他支出' WHERE `name` = 'Other Expense';
+UPDATE `category` SET `name` = '工资' WHERE `name` = 'Salary';
+UPDATE `category` SET `name` = '奖金' WHERE `name` = 'Bonus';
+UPDATE `category` SET `name` = '投资' WHERE `name` = 'Investment';
+UPDATE `category` SET `name` = '兼职' WHERE `name` = 'Part-time';
+UPDATE `category` SET `name` = '其他收入' WHERE `name` = 'Other Income';
+
+UPDATE `bill` SET `remark` = '午餐' WHERE `remark` = 'Lunch';
+UPDATE `bill` SET `remark` = '买衣服' WHERE `remark` = 'Clothes';
+UPDATE `bill` SET `remark` = '地铁' WHERE `remark` = 'Subway';
+UPDATE `bill` SET `remark` = '电影票' WHERE `remark` = 'Movie tickets';
+UPDATE `bill` SET `remark` = '五月工资' WHERE `remark` = 'May salary';
+UPDATE `bill` SET `remark` = '晚餐' WHERE `remark` = 'Dinner';
+UPDATE `bill` SET `remark` = '网购' WHERE `remark` = 'Online shopping';
+UPDATE `bill` SET `remark` = '公交' WHERE `remark` = 'Bus fare';
+UPDATE `bill` SET `remark` = '六月工资' WHERE `remark` = 'June salary';
+UPDATE `bill` SET `remark` = '一月工资' WHERE `remark` = 'January salary';
+UPDATE `bill` SET `remark` = '朋友聚餐' WHERE `remark` = 'Dining with friends';
+UPDATE `bill` SET `remark` = '打车和地铁' WHERE `remark` = 'Taxi and metro';
+UPDATE `bill` SET `remark` = '二月工资' WHERE `remark` = 'February salary';
+UPDATE `bill` SET `remark` = '春季购物' WHERE `remark` = 'Spring shopping';
+UPDATE `bill` SET `remark` = '演唱会门票' WHERE `remark` = 'Concert tickets';
+UPDATE `bill` SET `remark` = '四月工资' WHERE `remark` = 'April salary';
+UPDATE `bill` SET `remark` = '课程资料' WHERE `remark` = 'Course materials';
+UPDATE `bill` SET `remark` = '房租水电' WHERE `remark` = 'Rent utilities';
+UPDATE `bill` SET `remark` = '兼职项目' WHERE `remark` = 'Part-time project';
+UPDATE `bill` SET `remark` = '体检' WHERE `remark` = 'Medical check';
+UPDATE `bill` SET `remark` = '618 购物' WHERE `remark` = '618 shopping';

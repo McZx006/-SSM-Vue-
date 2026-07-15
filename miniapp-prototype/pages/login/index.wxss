@@ -1,0 +1,65 @@
+.auth-page {
+  min-height: 100vh;
+  padding: 56rpx 32rpx;
+  background:
+    radial-gradient(circle at 80% 0%, rgba(249, 115, 22, 0.20), transparent 34%),
+    linear-gradient(180deg, #ecfdf5 0%, #f8fafc 62%);
+}
+
+.brand-card {
+  padding: 44rpx 28rpx;
+  text-align: center;
+}
+
+.brand-mark {
+  width: 112rpx;
+  height: 112rpx;
+  margin: 0 auto 22rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 34rpx;
+  color: #ffffff;
+  background: linear-gradient(135deg, #0f766e, #f97316);
+  font-size: 54rpx;
+  font-weight: 900;
+}
+
+.brand-title {
+  font-size: 48rpx;
+  font-weight: 900;
+}
+
+.brand-subtitle {
+  margin-top: 12rpx;
+  color: #64748b;
+}
+
+.form-card {
+  padding: 34rpx;
+  border-radius: 34rpx;
+  background: #ffffff;
+  box-shadow: 0 24rpx 60rpx rgba(15, 23, 42, 0.10);
+}
+
+.form-title {
+  margin-bottom: 24rpx;
+  font-size: 38rpx;
+  font-weight: 900;
+}
+
+.input {
+  height: 92rpx;
+  margin-bottom: 20rpx;
+  padding: 0 24rpx;
+  border-radius: 22rpx;
+  background: #f8fafc;
+}
+
+.ghost-button,
+.auth-link {
+  margin-top: 22rpx;
+  text-align: center;
+  color: #0f766e;
+  font-size: 26rpx;
+}

@@ -1,0 +1,36 @@
+<view class="page">
+  <view class="form-card">
+    <view class="form-title">快速记一笔</view>
+    <view class="form-tip">选择类型、分类和金额，保存后同步到账单列表。</view>
+
+    <view class="type-row">
+      <view class="type-pill {{form.type === 'expense' ? 'active' : ''}}" data-type="expense" bindtap="changeType">支出</view>
+      <view class="type-pill income {{form.type === 'income' ? 'active' : ''}}" data-type="income" bindtap="changeType">收入</view>
+    </view>
+
+    <input class="input" type="digit" value="{{form.amount}}" data-field="amount" bindinput="handleInput" placeholder="金额" />
+
+    <picker mode="selector" range="{{filteredCategories}}" range-key="name" value="{{categoryIndex}}" bindchange="changeCategory">
+      <view class="picker-field">
+        <text>{{form.categoryName || '请选择分类'}}</text>
+        <text class="picker-arrow">›</text>
+      </view>
+    </picker>
+
+    <picker mode="date" value="{{form.date}}" bindchange="changeDate">
+      <view class="picker-field">
+        <text>{{form.date || '请选择日期'}}</text>
+        <text class="picker-arrow">›</text>
+      </view>
+    </picker>
+
+    <input class="input" value="{{form.remark}}" data-field="remark" bindinput="handleInput" placeholder="备注，如早餐、教材、兼职收入" />
+
+    <button class="primary-button" loading="{{loading}}" bindtap="submitBill">保存账单</button>
+  </view>
+
+  <view class="card">
+    <view class="section-title">小提示</view>
+    <view class="tip-text">小程序端复用后端 `/api/categories` 分类接口，并把分类名称映射为 `categoryId` 后提交到账单接口。</view>
+  </view>
+</view>

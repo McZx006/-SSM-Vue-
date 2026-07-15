@@ -1,0 +1,38 @@
+<view class="page">
+  <view class="hero-card">
+    <view class="muted">本月账本</view>
+    <view class="hero-title">{{budgetText}}</view>
+    <view class="hero-text">继续保持每日记账，月底复盘会更轻松。</view>
+    <view class="hero-progress">
+      <view class="hero-progress-inner" style="width: {{budgetUsage}}%;"></view>
+    </view>
+  </view>
+
+  <view class="quick-grid">
+    <view class="quick-item" data-template="breakfast" bindtap="openQuickBill">早餐</view>
+    <view class="quick-item" data-template="commute" bindtap="openQuickBill">通勤</view>
+    <view class="quick-item" data-template="book" bindtap="openQuickBill">教材</view>
+    <view class="quick-item income" data-template="parttime" bindtap="openQuickBill">兼职</view>
+  </view>
+
+  <view class="summary-grid">
+    <view class="card">
+      <view class="muted">本月收入</view>
+      <view class="amount income-text">¥{{summary.income}}</view>
+    </view>
+    <view class="card">
+      <view class="muted">本月支出</view>
+      <view class="amount expense-text">¥{{summary.expense}}</view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="muted">本月结余</view>
+    <view class="amount">¥{{summary.balance}}</view>
+  </view>
+
+  <view class="card">
+    <view class="section-title">智能建议</view>
+    <view class="advice">{{advice}}</view>
+  </view>
+</view>

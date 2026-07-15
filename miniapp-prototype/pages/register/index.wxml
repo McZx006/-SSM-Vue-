@@ -1,0 +1,19 @@
+<view class="auth-page">
+  <view class="form-card">
+    <view class="form-title">创建记账账号</view>
+    <view class="form-tip">注册后可管理账单、分类、预算和统计图表。</view>
+
+    <input class="input" value="{{form.username}}" data-field="username" bindinput="handleInput" placeholder="用户名，至少 3 位" />
+    <input class="input" value="{{form.email}}" data-field="email" bindinput="handleInput" placeholder="邮箱，可用于找回账号" />
+    <input class="input" value="{{form.password}}" data-field="password" bindinput="handleInput" password placeholder="密码，至少 6 位" />
+    <input class="input" value="{{form.confirmPassword}}" data-field="confirmPassword" bindinput="handleInput" password placeholder="再次确认密码" />
+
+    <view class="strength">
+      <view class="strength-bar" style="width: {{passwordStrength}}%;"></view>
+    </view>
+    <view class="form-tip">密码强度：{{passwordStrengthText}}</view>
+
+    <button class="primary-button" loading="{{loading}}" bindtap="handleRegister">注册</button>
+    <view class="auth-link" bindtap="goLogin">已有账号？返回登录</view>
+  </view>
+</view>

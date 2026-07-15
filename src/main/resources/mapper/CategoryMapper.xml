@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhangxin.mapper.CategoryMapper">
+
+    <resultMap id="CategoryResultMap" type="Category">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="type" column="type"/>
+        <result property="icon" column="icon"/>
+        <result property="color" column="color"/>
+        <result property="userId" column="user_id"/>
+        <result property="sortOrder" column="sort_order"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <select id="findById" resultMap="CategoryResultMap">
+        SELECT * FROM category WHERE id = #{id}
+    </select>
+
+    <select id="findAll" resultMap="CategoryResultMap">
+        SELECT * FROM category ORDER BY sort_order ASC, create_time DESC
+    </select>
+
+    <select id="findByType" resultMap="CategoryResultMap">
+        SELECT * FROM category WHERE type = #{type}
+        ORDER BY sort_order ASC, create_time DESC
+    </select>
+
+    <select id="findByUserId" resultMap="CategoryResultMap">
+        SELECT * FROM category WHERE user_id = #{userId}
+        ORDER BY sort_order ASC, create_time DESC
+    </select>
+
+    <select id="findSystemAndUserCategories" resultMap="CategoryResultMap">
+        SELECT * FROM category
+        WHERE user_id IS NULL OR user_id = #{userId}
+        ORDER BY type ASC, sort_order ASC, create_time DESC
+    </select>
+
+    <insert id="insert" parameterType="Category" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO category (name, type, icon, color, user_id, sort_order)
+        VALUES (#{name}, #{type}, #{icon}, #{color}, #{userId}, #{sortOrder})
+    </insert>
+
+    <update id="update" parameterType="Category">
+        UPDATE category
+        <set>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="type != null and type != ''">type = #{type},</if>
+            <if test="icon != null">icon = #{icon},</if>
+            <if test="color != null">color = #{color},</if>
+            <if test="sortOrder != null">sort_order = #{sortOrder},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM category WHERE id = #{id}
+    </delete>
+
+    <select id="checkNameExists" resultType="int">
+        SELECT COUNT(*) FROM category
+        WHERE name = #{name}
+        AND (user_id IS NULL OR user_id = #{userId})
+    </select>
+
+    <select id="countBillsByCategoryId" resultType="int">
+        SELECT COUNT(*) FROM bill WHERE category_id = #{categoryId}
+    </select>
+
+</mapper>

@@ -1,0 +1,17 @@
+<view class="auth-page">
+  <view class="brand-card">
+    <view class="brand-mark">¥</view>
+    <view class="brand-title">个人记账</view>
+    <view class="brand-subtitle">用图表看懂每一笔收支</view>
+  </view>
+
+  <view class="form-card">
+    <view class="form-title">欢迎回来</view>
+    <input class="input" value="{{form.username}}" data-field="username" bindinput="handleInput" placeholder="请输入用户名" />
+    <input class="input" value="{{form.password}}" data-field="password" bindinput="handleInput" password placeholder="请输入密码" />
+
+    <button class="primary-button" loading="{{loading}}" bindtap="handleLogin">登录</button>
+    <view class="ghost-button" bindtap="fillDemo">体验账号 testuser / 123456</view>
+    <view class="auth-link" bindtap="goRegister">还没有账号？立即注册</view>
+  </view>
+</view>

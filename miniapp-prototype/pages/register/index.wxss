@@ -1,0 +1,53 @@
+.auth-page {
+  min-height: 100vh;
+  padding: 56rpx 32rpx;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(20, 184, 166, 0.22), transparent 36%),
+    linear-gradient(180deg, #fff7ed 0%, #f8fafc 64%);
+}
+
+.form-card {
+  padding: 34rpx;
+  border-radius: 34rpx;
+  background: #ffffff;
+  box-shadow: 0 24rpx 60rpx rgba(15, 23, 42, 0.10);
+}
+
+.form-title {
+  font-size: 40rpx;
+  font-weight: 900;
+}
+
+.form-tip {
+  margin: 12rpx 0 24rpx;
+  color: #64748b;
+  font-size: 25rpx;
+}
+
+.input {
+  height: 92rpx;
+  margin-bottom: 20rpx;
+  padding: 0 24rpx;
+  border-radius: 22rpx;
+  background: #f8fafc;
+}
+
+.strength {
+  height: 14rpx;
+  border-radius: 999rpx;
+  background: #e2e8f0;
+  overflow: hidden;
+}
+
+.strength-bar {
+  height: 100%;
+  border-radius: 999rpx;
+  background: linear-gradient(90deg, #f97316, #14b8a6);
+}
+
+.auth-link {
+  margin-top: 22rpx;
+  text-align: center;
+  color: #0f766e;
+  font-size: 26rpx;
+}
