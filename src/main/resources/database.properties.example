@@ -1,8 +1,9 @@
-# Database Configuration
+# Database Configuration Template
+# Copy this file to database.properties and fill in your actual database credentials
 jdbc.driver=com.mysql.cj.jdbc.Driver
 jdbc.url=jdbc:mysql://localhost:3306/account_dashboard?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
-jdbc.username=root
-jdbc.password=123456
+jdbc.username=your_username
+jdbc.password=your_password
 
 # Druid Connection Pool Configuration
 druid.initialSize=5

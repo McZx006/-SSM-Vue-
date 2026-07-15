@@ -48,3 +48,9 @@ frontend/.npmrc
 *.log
 tmp/
 cookie.txt
+query
+test_login.ps1
+fix_passwords.ps1
+
+### Sensitive ###
+src/main/resources/database.properties
